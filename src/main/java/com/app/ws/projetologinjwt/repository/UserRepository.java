@@ -8,4 +8,6 @@ import com.app.ws.projetologinjwt.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	 public String findByEmailfindByEmailIsfindByEmailEquals(String email);
+	
 }
