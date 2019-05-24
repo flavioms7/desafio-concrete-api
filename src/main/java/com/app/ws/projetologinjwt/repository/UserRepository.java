@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.app.ws.projetologinjwt.entities.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	 public String findByEmailfindByEmailIsfindByEmailEquals(String email);
+	 Optional<User> findUserByEmail(String email);
 	
 }

@@ -2,6 +2,13 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -10,3 +17,4 @@
 .settings
 .springBeans
 .sts4-cache
+
