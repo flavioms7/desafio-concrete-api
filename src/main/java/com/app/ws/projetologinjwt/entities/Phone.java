@@ -20,7 +20,6 @@ public class Phone implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -35,7 +34,7 @@ public class Phone implements Serializable {
 	public Phone() {
 		super();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

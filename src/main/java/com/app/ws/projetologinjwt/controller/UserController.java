@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ws.projetologinjwt.dto.LoginDTO;
 import com.app.ws.projetologinjwt.entities.User;
 import com.app.ws.projetologinjwt.service.UserService;
 
@@ -24,6 +25,14 @@ public class UserController {
 		
 		return ResponseEntity.ok().body(responseUser);
 		
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO){
+		
+		User user = userService.login(loginDTO);
+		
+		return ResponseEntity.ok().body(user);
 	}
 	
 }

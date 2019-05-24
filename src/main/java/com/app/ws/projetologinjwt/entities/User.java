@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,19 +22,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity(name="user")
 public class User implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(generator = "uuid2")
 	@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "id", columnDefinition = "VARCHAR(255)")
 	private UUID id;
 
+	@NotBlank(message = "{name.not.blank}")
 	private String name;
+	
+    @NotBlank(message = "{email.not.blank}")
+    @Email(message = "{email.not.valid}")
 	private String email;
+    
+    @NotBlank(message = "{senha.not.blank}")
 	private String password;
 
 	private LocalDate created; 
