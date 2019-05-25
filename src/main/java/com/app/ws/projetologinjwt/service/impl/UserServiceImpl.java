@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
         if (user != null) {
         	
-            throw new EmailJaCadastradoException("E-mail já existente");
+            throw new EmailJaCadastradoException();
             
         } 
         	
@@ -61,13 +61,9 @@ public class UserServiceImpl implements UserService {
 		
 		Optional<User> userAux = userRepository.findUserByEmail(loginDTO.getPassword());
 		
-		if(userAux.isPresent()) {
-			//user = userAux;
-			
-		}else {
-			
-			
-		}
+		if(userAux !=  null){
+
+        }
 		
 		
 		
