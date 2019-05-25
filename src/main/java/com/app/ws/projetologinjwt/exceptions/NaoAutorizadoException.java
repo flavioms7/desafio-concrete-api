@@ -1,5 +1,7 @@
 package com.app.ws.projetologinjwt.exceptions;
 
+import org.springframework.http.HttpStatus;
+
 public class NaoAutorizadoException extends RuntimeException {
 
     /**
@@ -8,7 +10,7 @@ public class NaoAutorizadoException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     public static final String MSG = "Não autorizado";
 
-    public NaoAutorizadoException() {
+    public NaoAutorizadoException(HttpStatus httpStatus) {
 
         super(MSG);
     }

@@ -1,4 +1,5 @@
 package com.app.ws.projetologinjwt.exceptions;
+import org.springframework.http.HttpStatus;
 
 public class SessaoInvalidaException extends RuntimeException {
 
@@ -8,8 +9,9 @@ public class SessaoInvalidaException extends RuntimeException {
         private static final long serialVersionUID = 1L;
         public static final String MSG = "Sessão inválida";
 
-        public SessaoInvalidaException() {
+        public SessaoInvalidaException(HttpStatus httpStatus) {
 
             super(MSG);
+
         }
-    }
+}

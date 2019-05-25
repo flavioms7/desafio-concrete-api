@@ -1,5 +1,7 @@
 package com.app.ws.projetologinjwt.exceptions;
 
+import org.springframework.http.HttpStatus;
+
 public class EmailJaCadastradoException extends RuntimeException {
 	
 	/**
@@ -8,7 +10,7 @@ public class EmailJaCadastradoException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	public static final String MSG = "E-mail já existente";
 
-	public EmailJaCadastradoException() {
+	public EmailJaCadastradoException(HttpStatus httpStatus) {
 
 		super(MSG);
 	}

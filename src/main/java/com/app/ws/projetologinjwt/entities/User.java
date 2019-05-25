@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity(name="user")
+@Entity
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
