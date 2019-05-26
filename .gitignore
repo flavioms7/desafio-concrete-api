@@ -1,6 +1,8 @@
 .gradle
 /build/
+build
 !gradle/wrapper/gradle-wrapper.jar
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
@@ -8,6 +10,7 @@
 *.iml
 *.ipr
 /out/
+out
 
 ### STS ###
 .apt_generated
