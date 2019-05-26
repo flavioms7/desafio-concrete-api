@@ -11,6 +11,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
@@ -36,12 +39,16 @@ public class UserServiceImplTest {
         user.setEmail("joao@silva.org");
         user.setPassword("hunter2");
         user.setCreated(LocalDate.now());
-        user.getLastLogin(LocalDateTime.now());
         user.setModified(LocalDateTime.now());
-        user.setToken("4155133e-c57f-43c5-9b4b-3c2c4fb70eae");
+        user.setLastLogin(LocalDateTime.now());
+        user.generateToken();
+
+        //when(userService.createUser(user)).thenReturn(user);
+        //when(userRepository.findUserByEmail(user.getEmail()).thenReturn(user));
 
 
-        "", ,"", LocalDate.now(), LocalDateTime.now(), LocalDateTime.now(), User., List < Phone > phones
+
+
 
     }
 

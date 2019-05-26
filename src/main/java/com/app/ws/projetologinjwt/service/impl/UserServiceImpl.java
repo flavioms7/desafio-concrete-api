@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.app.ws.projetologinjwt.dto.ProfileDTO;
+import com.app.ws.projetologinjwt.dto.UserDTO;
 import com.app.ws.projetologinjwt.exceptions.NaoAutorizadoException;
 import com.app.ws.projetologinjwt.exceptions.SessaoInvalidaException;
 import com.app.ws.projetologinjwt.exceptions.UsuarioSenhaInvalidosException;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,9 +37,10 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 * @throws EmailJaCadastradoException
 	 */
-    public User createUser(User pUser) throws EmailJaCadastradoException {
+    public UserDTO createUser(User pUser) throws EmailJaCadastradoException {
 
-     User user = null;
+     User user;
+     UserDTO userDTO = new UserDTO();
      
      	user = userRepository.findUserByEmail(pUser.getEmail()).orElse(null);
 
@@ -55,6 +58,7 @@ public class UserServiceImpl implements UserService {
         	pUser.generateToken();
         	
         	user = userRepository.save(pUser);
+
         	
 //        	if (pUser.getPhones() != null && !pUser.getPhones().isEmpty()) {
 //    			for (Phone phone : pUser.getPhones()) {
@@ -63,8 +67,9 @@ public class UserServiceImpl implements UserService {
 //    			phoneRepository.saveAll(pUser.getPhones());
 //
 //        	}
-        	
-            return user;
+
+		BeanUtils.copyProperties(user, userDTO);
+            return userDTO;
     }
 
 	/**
@@ -74,7 +79,7 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 * @throws UsuarioSenhaInvalidosException
 	 */
-	public User login(LoginDTO pLoginDTO) throws UsuarioSenhaInvalidosException {
+	public UserDTO login(LoginDTO pLoginDTO) throws UsuarioSenhaInvalidosException {
 
 		Optional<User> userOptional = userRepository.findUserByEmail(pLoginDTO.getEmail());
 
@@ -89,12 +94,15 @@ public class UserServiceImpl implements UserService {
 		user.generateToken();
 
 		userRepository.save(user);
-		
-		return user;
+
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(user, userDTO);
+
+		return userDTO;
 	}
 
 	@Override
-	public User profile(ProfileDTO pProfileDTO) {
+	public UserDTO profile(ProfileDTO pProfileDTO) {
 
 		Optional<User> userOptionalToken = userRepository.findByToken(UUID.fromString(pProfileDTO.getToken()));
 			userOptionalToken.orElseThrow(() -> new NaoAutorizadoException(HttpStatus.UNAUTHORIZED));
@@ -115,8 +123,10 @@ public class UserServiceImpl implements UserService {
 
 				throw new NaoAutorizadoException(HttpStatus.UNAUTHORIZED);
 			}
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(userOptionalId.get(), userDTO);
 
-		return userOptionalId.get();
+		return userDTO;
 	}
 
 	private User getPasswordEncrypted(User pUser){

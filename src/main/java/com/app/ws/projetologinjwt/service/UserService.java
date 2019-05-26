@@ -2,14 +2,15 @@ package com.app.ws.projetologinjwt.service;
 
 import com.app.ws.projetologinjwt.dto.LoginDTO;
 import com.app.ws.projetologinjwt.dto.ProfileDTO;
+import com.app.ws.projetologinjwt.dto.UserDTO;
 import com.app.ws.projetologinjwt.entities.User;
 
 public interface UserService {
 
-	User createUser(User pUser);
+	UserDTO createUser(User pUser);
 	
-	User login(LoginDTO pLoginDTO);
+	UserDTO login(LoginDTO pLoginDTO);
 
-	User profile(ProfileDTO pProfileDTO);
+	UserDTO profile(ProfileDTO pProfileDTO);
 	
 }

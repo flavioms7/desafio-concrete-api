@@ -2,6 +2,7 @@ package com.app.ws.projetologinjwt.controller;
 
 import com.app.ws.projetologinjwt.dto.LoginDTO;
 import com.app.ws.projetologinjwt.dto.ProfileDTO;
+import com.app.ws.projetologinjwt.dto.UserDTO;
 import com.app.ws.projetologinjwt.entities.User;
 import com.app.ws.projetologinjwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
 
-        User responseUser = userService.createUser(user);
+        UserDTO responseUser = userService.createUser(user);
 
         return ResponseEntity.ok().body(responseUser);
 
@@ -29,19 +30,19 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
 
-        User user = userService.login(loginDTO);
+        UserDTO userDTO = userService.login(loginDTO);
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(userDTO);
     }
 
     @PostMapping("/profile")
-    public ResponseEntity<User> profile(@RequestBody ProfileDTO profileDTO) {
+    public ResponseEntity<UserDTO> profile(@RequestBody ProfileDTO profileDTO) {
 
-        User user = userService.profile(profileDTO);
+        UserDTO userDTO = userService.profile(profileDTO);
 
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(userDTO);
     }
 
 
