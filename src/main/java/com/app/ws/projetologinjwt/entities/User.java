@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,7 +37,7 @@ public class User implements Serializable {
     @NotBlank(message = "{email.not.blank}")
     @Email(message = "{email.not.valid}")
 	private String email;
-    
+
     @NotBlank(message = "{senha.not.blank}")
 	private String password;
 

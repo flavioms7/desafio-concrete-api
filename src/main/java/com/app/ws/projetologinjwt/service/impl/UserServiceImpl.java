@@ -10,6 +10,7 @@ import com.app.ws.projetologinjwt.exceptions.NaoAutorizadoException;
 import com.app.ws.projetologinjwt.exceptions.SessaoInvalidaException;
 import com.app.ws.projetologinjwt.exceptions.UsuarioSenhaInvalidosException;
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,8 +45,10 @@ public class UserServiceImpl implements UserService {
         	
             throw new EmailJaCadastradoException(HttpStatus.UNAUTHORIZED);
             
-        } 
-        	
+        }
+
+            pUser = this.getPasswordEncrypted(pUser);
+
         	pUser.setCreated(LocalDate.now());
         	pUser.setModified(LocalDateTime.now());
         	pUser.setLastLogin(LocalDateTime.now());
@@ -58,7 +61,7 @@ public class UserServiceImpl implements UserService {
 //    				phone.setUser(user);
 //    			}
 //    			phoneRepository.saveAll(pUser.getPhones());
-//    			
+//
 //        	}
         	
             return user;
@@ -77,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
 		User user = userOptional.orElseThrow(() -> new UsuarioSenhaInvalidosException(HttpStatus.UNAUTHORIZED));
 
-		if(!pLoginDTO.getPassword().equals(user.getPassword())){
+		if(!this.passwordAuthentication(pLoginDTO.getPassword(), user.getPassword())){
 
 			throw new UsuarioSenhaInvalidosException(HttpStatus.UNAUTHORIZED);
 		}
@@ -115,6 +118,28 @@ public class UserServiceImpl implements UserService {
 
 		return userOptionalId.get();
 	}
+
+	private User getPasswordEncrypted(User pUser){
+
+	    //Gera um sal aleatório
+	    String salt = BCrypt.gensalt();
+
+	    //Gera a password hash utilizando o sal gerado
+        String passwordHash = BCrypt.hashpw(pUser.getPassword(), salt);
+
+        //Atualiza o password do usuário
+        pUser.setPassword(passwordHash);
+
+        return pUser;
+    }
+
+    private boolean passwordAuthentication(String passwordDTO, String userPassword){
+
+        // Usa o BCrypt para verificar se a senha passada está correta.
+        boolean isAuthenticationSuccessful = BCrypt.checkpw(passwordDTO, userPassword);
+
+        return isAuthenticationSuccessful;
+    }
 
 }
 
