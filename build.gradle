@@ -20,6 +20,4 @@ dependencies {
 	compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
 }

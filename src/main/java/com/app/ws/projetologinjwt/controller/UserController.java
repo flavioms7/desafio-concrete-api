@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.java2d.cmm.Profile;
-
-import javax.servlet.ServletException;
 
 @RestController()
 @RequestMapping()
@@ -31,23 +28,21 @@ public class UserController {
     }
 
 
-	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO){
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
 
-		User user = userService.login(loginDTO);
+        User user = userService.login(loginDTO);
 
-		return ResponseEntity.ok().body(user);
-	}
+        return ResponseEntity.ok().body(user);
+    }
 
-	@PostMapping("/profile")
-	public ResponseEntity<User> profile(@RequestBody ProfileDTO profileDTO){
+    @PostMapping("/profile")
+    public ResponseEntity<User> profile(@RequestBody ProfileDTO profileDTO) {
 
         User user = userService.profile(profileDTO);
 
         return ResponseEntity.ok().body(user);
     }
-
-
 
 
 }
