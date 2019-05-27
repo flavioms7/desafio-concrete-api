@@ -75,8 +75,8 @@ https://desafio-concrete-api-rest.herokuapp.com/perfil
 
 ```
 {
-    "usrId": "3a4bc224-93b7-466b-8572-bdfc305e9cb4",
-    "token": "df16887d-e153-4d78-b7a7-0156a4d5d376"
+    "idUser": "055d0299-77bd-4636-becb-9610c6b2bb77", 
+    "token": "0e04c0be-bbfe-4965-ac86-763ad0a62c29"
 }
 
 ```
