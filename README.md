@@ -87,6 +87,7 @@ https://desafio-concrete-api-rest.herokuapp.com/perfil
 * Framework Spring Boot.
 * Persistência com Spring Data e Hibernate.
 * Cloud host Heroku.
+* Postman.
 * Servidor Tomcat Embedded.
 * BCrypt (Método de criptografia hash).
 
