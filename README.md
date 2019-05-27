@@ -89,7 +89,6 @@ https://desafio-concrete-api-rest.herokuapp.com/perfil
 * Cloud host Heroku.
 * Servidor Tomcat Embedded.
 * BCrypt (Método de criptografia hash).
-* Junit e Mockito.
 
 ## Autor
 * [Flavio Miranda](https://github.com/flavioms7)
