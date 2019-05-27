@@ -25,7 +25,6 @@ public class UserController {
         UserDTO responseUser = userService.createUser(user);
 
         return ResponseEntity.ok().body(responseUser);
-
     }
 
     @PostMapping("/login")
@@ -43,6 +42,4 @@ public class UserController {
 
         return ResponseEntity.ok().body(userDTO);
     }
-
-
 }

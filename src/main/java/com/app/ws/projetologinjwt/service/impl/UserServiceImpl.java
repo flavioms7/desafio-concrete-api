@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private PhoneRepository phoneRepository;
 
 	/**
+	 * Cria o usuário na base de dados
 	 *
 	 * @param pUser
 	 * @return
@@ -42,24 +43,20 @@ public class UserServiceImpl implements UserService {
      User user;
      UserDTO userDTO = new UserDTO();
      
-     	user = userRepository.findUserByEmail(pUser.getEmail()).orElse(null);
+     user = userRepository.findUserByEmail(pUser.getEmail()).orElse(null);
 
         if (user != null) {
-        	
             throw new EmailJaCadastradoException(HttpStatus.UNAUTHORIZED);
-            
         }
 
-            pUser = this.getPasswordEncrypted(pUser);
+	 pUser = this.getPasswordEncrypted(pUser);
+	 pUser.setCreated(LocalDate.now());
+	 pUser.setModified(LocalDateTime.now());
+	 pUser.setLastLogin(LocalDateTime.now());
+ 	 pUser.generateToken();
 
-        	pUser.setCreated(LocalDate.now());
-        	pUser.setModified(LocalDateTime.now());
-        	pUser.setLastLogin(LocalDateTime.now());
-        	pUser.generateToken();
-        	
-        	user = userRepository.save(pUser);
+	 user = userRepository.save(pUser);
 
-        	
 //        	if (pUser.getPhones() != null && !pUser.getPhones().isEmpty()) {
 //    			for (Phone phone : pUser.getPhones()) {
 //    				phone.setUser(user);
@@ -68,12 +65,14 @@ public class UserServiceImpl implements UserService {
 //
 //        	}
 
-		BeanUtils.copyProperties(user, userDTO);
-            return userDTO;
+		//Transfere os dados que são necessários serem retornados para o userDTO
+	 	BeanUtils.copyProperties(user, userDTO);
+
+		return userDTO;
     }
 
 	/**
-	 * -
+	 * - Realiza o login do usuário
 	 *
 	 * @param pLoginDTO
 	 * @return
@@ -82,13 +81,12 @@ public class UserServiceImpl implements UserService {
 	public UserDTO login(LoginDTO pLoginDTO) throws UsuarioSenhaInvalidosException {
 
 		Optional<User> userOptional = userRepository.findUserByEmail(pLoginDTO.getEmail());
-
 		User user = userOptional.orElseThrow(() -> new UsuarioSenhaInvalidosException(HttpStatus.UNAUTHORIZED));
 
-		if(!this.passwordAuthentication(pLoginDTO.getPassword(), user.getPassword())){
+			if(!this.passwordAuthentication(pLoginDTO.getPassword(), user.getPassword())){
 
-			throw new UsuarioSenhaInvalidosException(HttpStatus.UNAUTHORIZED);
-		}
+				throw new UsuarioSenhaInvalidosException(HttpStatus.UNAUTHORIZED);
+			}
 
 		user.setLastLogin(LocalDateTime.now());
 		user.generateToken();
@@ -101,13 +99,18 @@ public class UserServiceImpl implements UserService {
 		return userDTO;
 	}
 
-	@Override
-	public UserDTO profile(ProfileDTO pProfileDTO) {
+	/**
+	 * Acessa o perfil do usuário caso o usuário e senha estejam corretos
+	 * @param pProfileDTO
+	 * @return
+	 * @throws NaoAutorizadoException
+	 */
+	public UserDTO profile(ProfileDTO pProfileDTO) throws NaoAutorizadoException {
 
 		Optional<User> userOptionalToken = userRepository.findByToken(UUID.fromString(pProfileDTO.getToken()));
 			userOptionalToken.orElseThrow(() -> new NaoAutorizadoException(HttpStatus.UNAUTHORIZED));
 
-			Optional<User> userOptionalId = userRepository.findById(UUID.fromString(pProfileDTO.getIdUser()));
+		Optional<User> userOptionalId = userRepository.findById(UUID.fromString(pProfileDTO.getIdUser()));
 			if(userOptionalId.isPresent()){
 
 			    UUID token = userOptionalId.get().getToken();
@@ -116,19 +119,23 @@ public class UserServiceImpl implements UserService {
 				if(!tokenProfile.equals(token)){
 					throw new NaoAutorizadoException(HttpStatus.UNAUTHORIZED);
 				}else if(LocalDateTime.now().minusMinutes(30).compareTo(userOptionalId.get().getLastLogin()) > 0){
-
 					throw new SessaoInvalidaException(HttpStatus.GONE);
 				}
 			}else{
-
 				throw new NaoAutorizadoException(HttpStatus.UNAUTHORIZED);
 			}
+
 		UserDTO userDTO = new UserDTO();
 		BeanUtils.copyProperties(userOptionalId.get(), userDTO);
 
 		return userDTO;
 	}
 
+	/**
+	 * Realiza a criptografia do password informado pelo usuário
+	 * @param pUser
+	 * @return
+	 */
 	private User getPasswordEncrypted(User pUser){
 
 	    //Gera um sal aleatório
@@ -143,14 +150,19 @@ public class UserServiceImpl implements UserService {
         return pUser;
     }
 
-    private boolean passwordAuthentication(String passwordDTO, String userPassword){
+	/**
+	 * Verifica se o password informado corresponde ao password em hash armazenado.
+	 * @param passwordDTO
+	 * @param userPassword
+	 * @return
+	 */
+	private boolean passwordAuthentication(String passwordDTO, String userPassword){
 
         // Usa o BCrypt para verificar se a senha passada está correta.
         boolean isAuthenticationSuccessful = BCrypt.checkpw(passwordDTO, userPassword);
 
         return isAuthenticationSuccessful;
     }
-
 }
 
 

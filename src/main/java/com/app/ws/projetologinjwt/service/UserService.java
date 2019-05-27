@@ -12,5 +12,4 @@ public interface UserService {
 	UserDTO login(LoginDTO pLoginDTO);
 
 	UserDTO profile(ProfileDTO pProfileDTO);
-	
 }
