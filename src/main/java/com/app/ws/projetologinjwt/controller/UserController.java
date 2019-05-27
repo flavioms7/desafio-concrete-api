@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/user")
+    @PostMapping("/cadastro")
     public ResponseEntity<?> createUser(@RequestBody User user) {
 
         UserDTO responseUser = userService.createUser(user);
@@ -27,7 +27,6 @@ public class UserController {
         return ResponseEntity.ok().body(responseUser);
 
     }
-
 
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
@@ -37,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
-    @PostMapping("/profile")
+    @PostMapping("/perfil")
     public ResponseEntity<UserDTO> profile(@RequestBody ProfileDTO profileDTO) {
 
         UserDTO userDTO = userService.profile(profileDTO);
