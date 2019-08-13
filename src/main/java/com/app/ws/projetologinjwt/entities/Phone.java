@@ -32,7 +32,7 @@ public class Phone implements Serializable {
 	public Phone() {
 		super();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}

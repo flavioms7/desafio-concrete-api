@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.app.ws.projetologinjwt.dto.ProfileDTO;
 import com.app.ws.projetologinjwt.dto.UserDTO;
+import com.app.ws.projetologinjwt.entities.Phone;
 import com.app.ws.projetologinjwt.exceptions.NaoAutorizadoException;
 import com.app.ws.projetologinjwt.exceptions.SessaoInvalidaException;
 import com.app.ws.projetologinjwt.exceptions.UsuarioSenhaInvalidosException;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+	@Autowired
     private PhoneRepository phoneRepository;
 
 	/**
@@ -57,13 +59,13 @@ public class UserServiceImpl implements UserService {
 
 	 user = userRepository.save(pUser);
 
-//        	if (pUser.getPhones() != null && !pUser.getPhones().isEmpty()) {
-//    			for (Phone phone : pUser.getPhones()) {
-//    				phone.setUser(user);
-//    			}
-//    			phoneRepository.saveAll(pUser.getPhones());
-//
-//        	}
+	 //Atualiza os itens da tabela de Phones com a Chave Estrangeira
+	 if (pUser.getPhones() != null && !pUser.getPhones().isEmpty()) {
+		for (Phone phone : pUser.getPhones()) {
+				phone.setUser(user);
+		}
+		phoneRepository.saveAll(pUser.getPhones());
+	 }
 
 		//Transfere os dados que são necessários serem retornados para o userDTO
 	 	BeanUtils.copyProperties(user, userDTO);

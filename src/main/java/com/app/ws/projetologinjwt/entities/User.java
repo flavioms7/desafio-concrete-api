@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name="user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,8 +41,7 @@ public class User implements Serializable {
     @Column(columnDefinition = "VARCHAR(255)")
     private UUID token;
 
-    @ElementCollection
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade= CascadeType.ALL)
     private List<Phone> phones;
 
     public User() {
