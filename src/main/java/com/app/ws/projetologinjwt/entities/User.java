@@ -41,7 +41,7 @@ public class User implements Serializable {
     @Column(columnDefinition = "VARCHAR(255)")
     private UUID token;
 
-    @OneToMany(mappedBy = "user", cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Phone> phones;
 
     public User() {
