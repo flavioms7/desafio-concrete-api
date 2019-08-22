@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/flavioms7/desafio-concrete-api.svg?branch=master)](https://travis-ci.org/flavioms7/desafio-concrete-api)
+
 # Desafio Concrete Solutions
 * Criação de uma aplicação que exponha uma API RESTful de criação de usuários, login e acesso ao perfil. A constrção deste desafio faz parte de uma seleção para a empresa Concrete Solutions.
 
