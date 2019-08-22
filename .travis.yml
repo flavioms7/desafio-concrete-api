@@ -5,3 +5,13 @@ sudo: required
 
 before_install:
   - chmod +x gradlew
+
+addons:
+  sonarcloud:
+    organization: "4beb8e33ed4e4c71ea44a416ae0e1c2bfceab238"
+    token:
+      secure: "travis encrypt 39df73ef4af8844aa7ca2bf9bdb4c6dfd9a00f81"
+
+script:
+  - ./gradlew sonarqube
+
