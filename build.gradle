@@ -18,7 +18,7 @@ jacoco {
 
 sonarqube {
 	properties {
-		sonar.projectKey= flavioms7_desafio-concrete-api
+		sonar.projectKey= "flavioms7_desafio-concrete-api"
 	}
 }
 
