@@ -1,7 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.5.RELEASE'
 	id 'java'
-	id "org.sonarqube" version "2.7.1"
+	id "org.sonarqube" version "2.7"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -18,7 +18,7 @@ jacoco {
 
 sonarqube {
 	properties {
-		sonar.projectKey= "flavioms7_desafio-concrete-api"
+		property 'sonar.projectKey', 'flavioms7-concrete'
 	}
 }
 
@@ -30,14 +30,19 @@ test {
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation('org.springframework.boot:spring-boot-devtools')
+	implementation 'org.springframework.boot:spring-boot-devtools'
 	compile 'org.slf4j:slf4j-api:1.7.5'
 	compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
+	// https://mvnrepository.com/artifact/org.sonarsource.scanner.gradle/sonarqube-gradle-plugin
+	implementation group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '2.7'
+
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
