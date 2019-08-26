@@ -13,13 +13,16 @@ sourceCompatibility = '1.8'
 
 jacoco {
 	toolVersion = "0.8.4" //jacoco version
-	reportsDir = file("$buildDir/reports/jacoco") //default directory where jacoco generates test reports
+	//reportsDir = file("$buildDir/reports/jacoco") //default directory where jacoco generates test reports
 }
 
+jacocoTestReport {
+	reports.xml.enable = true
+}
 sonarqube {
 	properties {
 		property 'sonar.projectKey', 'flavioms7-concrete'
-		property 'sonar.coverage.jacoco.xmlReportPaths', 'file("$buildDir/reports/jacoco")'
+		//property 'sonar.coverage.jacoco.xmlReportPaths', 'file("$buildDir/reports/jacoco")'
 	}
 }
 
