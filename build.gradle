@@ -16,13 +16,14 @@ jacoco {
 	//reportsDir = file("$buildDir/reports/jacoco") //default directory where jacoco generates test reports
 }
 
-jacocoTestReport {
+/*jacocoTestReport {
 	reports.xml.enable = true
-}
+}*/
+
 sonarqube {
 	properties {
 		property 'sonar.projectKey', 'flavioms7-concrete'
-		//property 'sonar.coverage.jacoco.xmlReportPaths', 'file("$buildDir/reports/jacoco")'
+		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco'
 	}
 }
 
